@@ -7,7 +7,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getGoalApi, getProgressApi, toggleMilestoneApi } from "@/lib/goals";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-import { ChatBox } from "@/components/ChatBox";
+import AIAvatarTutor from "@/components/AIAvatarTutor";
 
 // Create a wrapper component to catch errors
 class ErrorBoundary extends React.Component<{ children: React.ReactNode }, { hasError: boolean }> {
@@ -176,7 +176,7 @@ const GoalPageContent = () => {
 
             <section>
               <h2 className="text-xl font-semibold mb-3">AI Tutor</h2>
-              <ChatBox goalId={id!} />
+              <AIAvatarTutor goalId={id!} goalTitle={goal.title} />
             </section>
           </div>
           <aside className="space-y-6">

@@ -50,3 +50,16 @@ export function getProgressApi(goalId: string) {
   }
   return apiFetch<ProgressResponse>(`/progress/${goalId}`);
 }
+
+export function getOverallProgressApi() {
+  return apiFetch<{
+    totalGoals: number;
+    completedGoals: number;
+    averageProgress: number;
+    overallVelocity: string;
+    weeklySummary: string;
+    totalMilestones: number;
+    completedMilestones: number;
+    lastUpdated: string;
+  }>("/progress");
+}

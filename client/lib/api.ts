@@ -98,16 +98,28 @@ export async function apiFetch<T>(path: string, init?: RequestInit): Promise<T> 
   }
 }
 
+export const api = {
+  get: async <T>(path: string, token?: string): Promise<T> => {
+    return apiFetch<T>(path, { method: 'GET', headers: token ? { Authorization: `Bearer ${token}` } : {} });
+  },
+  post: async <T>(path: string, body: any, token?: string): Promise<T> => {
+    return apiFetch<T>(path, { method: 'POST', body: JSON.stringify(body), headers: token ? { Authorization: `Bearer ${token}` } : {} });
+  },
+  put: async <T>(path: string, body: any, token?: string): Promise<T> => {
+    return apiFetch<T>(path, { method: 'PUT', body: JSON.stringify(body), headers: token ? { Authorization: `Bearer ${token}` } : {} });
+  },
+  patch: async <T>(path: string, body: any, token?: string): Promise<T> => {
+    return apiFetch<T>(path, { method: 'PATCH', body: JSON.stringify(body), headers: token ? { Authorization: `Bearer ${token}` } : {} });
+  },
+  delete: async <T>(path: string, token?: string): Promise<T> => {
+    return apiFetch<T>(path, { method: 'DELETE', headers: token ? { Authorization: `Bearer ${token}` } : {} });
+  },
+};
+
 export async function loginApi(body: LoginRequest) {
-  return apiFetch<LoginResponse>("/auth/login", {
-    method: "POST",
-    body: JSON.stringify(body),
-  });
+  return api.post<LoginResponse>("/auth/login", body);
 }
 
 export async function signupApi(body: SignupRequest) {
-  return apiFetch<SignupResponse>("/auth/signup", {
-    method: "POST",
-    body: JSON.stringify(body),
-  });
+  return api.post<SignupResponse>("/auth/signup", body);
 }

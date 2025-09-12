@@ -6,6 +6,11 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createGoalApi, deleteGoalApi, listGoalsApi } from "@/lib/goals";
 import { CreateGoalDialog } from "@/components/CreateGoalDialog";
 import { GoalCard } from "@/components/GoalCard";
+import CheckinSettings from "@/components/CheckinSettings";
+import CheckinCalendar from "@/components/CheckinCalendar";
+import ProgressAssessmentForm from "@/components/ProgressAssessmentForm";
+import ProgressChart from "@/components/ProgressChart";
+import ProgressStats from "@/components/ProgressStats";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Area, AreaChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 
@@ -65,29 +70,28 @@ export default function DashboardPage() {
             <h2 className="text-xl font-semibold mb-3">Create a goal</h2>
             <CreateGoalDialog onCreate={(v) => createGoal.mutateAsync(v)} />
           </section>
+
+          <section>
+            <ProgressStats />
+          </section>
+
+          <section>
+            <ProgressChart />
+          </section>
         </div>
         <aside className="space-y-6">
+          <CheckinSettings />
+
           <Card>
             <CardHeader>
-              <CardTitle>Progress overview</CardTitle>
+              <CardTitle>Quick Check-in</CardTitle>
             </CardHeader>
-            <CardContent className="h-64">
-              <ResponsiveContainer width="100%" height="100%">
-                <AreaChart data={chartData}>
-                  <defs>
-                    <linearGradient id="colorProgress" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#6366f1" stopOpacity={0.6} />
-                      <stop offset="95%" stopColor="#8b5cf6" stopOpacity={0.1} />
-                    </linearGradient>
-                  </defs>
-                  <XAxis dataKey="name" hide />
-                  <YAxis hide domain={[0, 100]} />
-                  <Tooltip />
-                  <Area type="monotone" dataKey="value" stroke="#6366f1" fillOpacity={1} fill="url(#colorProgress)" />
-                </AreaChart>
-              </ResponsiveContainer>
+            <CardContent>
+              <ProgressAssessmentForm />
             </CardContent>
           </Card>
+
+          <CheckinCalendar />
         </aside>
       </div>
     </AppLayout>
