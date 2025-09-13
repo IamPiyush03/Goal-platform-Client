@@ -61,6 +61,16 @@ export interface ChatResponse {
   reply: string;
 }
 
+export interface ChatMessage {
+  role: 'user' | 'assistant';
+  content: string;
+  timestamp: string;
+}
+
+export interface ChatHistoryResponse {
+  messages: ChatMessage[];
+}
+
 // Progress
 export interface ProgressResponse {
   completion: number; // 0-100
