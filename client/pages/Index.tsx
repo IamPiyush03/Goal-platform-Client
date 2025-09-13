@@ -1,8 +1,11 @@
 import { Button } from "@/components/ui/button";
 import AppLayout from "@/components/AppLayout";
 import { Link } from "react-router-dom";
+import { useAuth } from "@/context/AuthContext";
 
 export default function Index() {
+  const { isAuthenticated } = useAuth();
+
   return (
     <AppLayout>
       <section className="grid lg:grid-cols-2 gap-10 items-center animate-in fade-in-50 slide-in-from-bottom-2 duration-500">
@@ -17,7 +20,11 @@ export default function Index() {
             Stride helps you create goals, break them into milestones, chat with an AI tutor, and track progress with beautiful visuals.
           </p>
           <div className="flex flex-wrap gap-3">
-            <Button asChild><Link to="/auth">Get started</Link></Button>
+            <Button asChild>
+              <Link to={isAuthenticated ? "/dashboard" : "/auth"}>
+                {isAuthenticated ? "Go to Dashboard" : "Get started"}
+              </Link>
+            </Button>
             <Button variant="outline" asChild><Link to="/dashboard">View dashboard</Link></Button>
           </div>
           <ul className="grid sm:grid-cols-2 gap-3 text-sm">
